@@ -9,31 +9,47 @@
     <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@700&family=Inter:wght@400;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <title>JS Game</title>
+    <link rel="icon" href="img/favicon.png" type="image/x-icon">
+    <title>TextSecret</title>
 </head>
 
 <body>
-
+    <!-- Ingreso de texto -->
     <div class="container">
-        <div class="container__contenido">
-            <div class="container__informaciones">
-                <div class="container__texto">
-                    <h1></h1>
-                    <p class="texto__parrafo"></p>
-                </div>
-                <input type="number" id="valorIngresado" min="1" max="10" class="container__input">
-                <div class="chute container__botones">
-                    <button onclick="numeroUsuario();" class="container__boton" id="intento" disabled>Intentar</button>
-                    <button onclick="reiniciarJuego();" class="container__boton" id="reiniciar" disabled>Nuevo juego</button>
-                </div>
+        <div class="container__text">
+            <textarea id="valorIngresado" class="container__input" placeholder="Ingresa tu texto aquí"></textarea>
+        </div>
+        <div class="container__boton-container">
+            <div class="botones">
+                <button onclick="encriptarTexto();" class="container__boton" id="intento" disabled>Encriptar</button>
+                <button onclick="desencriptarTexto();" class="container__boton" id="reiniciar" disabled>Desencriptar</button>
             </div>
-            <img src="./img/ia.png" alt="Una persona mirando a la izquierda" class="container__imagen-persona" />
         </div>
     </div>
 
-
-
-
+    <!-- Resultado proceso -->
+    <div class="container">
+        <div class="container__img" id="imagenCatSleep" hidden>
+            <img src="img/catSleep.png" alt="Imagen de resultado">
+        </div>
+        <div class="container__img" id="imagenCatWhat" hidden>
+            <img src="img/catWhat.png" alt="Imagen de resultado">
+        </div>
+        <div class="container__text" id="containerResultado" hidden>
+            <textarea id="resultadoProceso" class="container__input" readonly></textarea>
+        </div>
+        <div class="container__boton-container" id="containerResultado" hidden>
+            <div class="botones">
+                <button onclick="copiarTexto();" class="container__boton" id="copiarTexto">Copiar texto</button>
+            </div>
+        </div>
+    </div>
+    <!-- Pie de página -->
+    <footer class="footer">
+        <div class="footer__content">
+            Desarrollado por <strong>Nelly de Jesús Silva Galindo</strong> &copy; 2024
+        </div>
+    </footer>
     <script src="app.js" defer></script>
 </body>
 

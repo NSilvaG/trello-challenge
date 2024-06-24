@@ -1,8 +1,44 @@
 //variables
+let mostrarCatSleep = false;
+let mostrarCatWhat = false;
+let mostrarContenedor = false;
 let numeroSecreto = 0;
 let intentos = 0;
 let numeroSorteado = [];
 let numeroMaximo = 3;
+
+const valorIngresado = document.getElementById('valorIngresado');
+const imagenCatSleep = document.getElementById('imagenCatSleep');
+const imagenCatWhat = document.getElementById('imagenCatWhat');
+imagenCatSleep.style.display = 'block';
+imagenCatWhat.style.display = 'none';
+valorIngresado.addEventListener('input', function() {
+    if (valorIngresado.value.trim() === '') {
+        mostrarCatSleep = true; // No mostrar la imagen si el textarea está vacío
+        mostrarContenedor = false;
+        mostrarCatWhat = false;
+    } else if (valorIngresado.value.trim() !== '') {
+        mostrarCatSleep = false; // Mostrar la imagen si el textarea tiene contenido
+        mostrarContenedor = false;
+        mostrarCatWhat = true;
+    }
+    // else {
+    //     mostrarCatSleep = false; // Mostrar la imagen si el textarea tiene contenido
+    //     mostrarContenedor = true;
+    //     mostrarCatWhat = false;
+    // }
+    actualizarVisibilidadImagen();
+});
+
+function actualizarVisibilidadImagen() {
+    if (mostrarCatSleep) {
+        imagenCatSleep.style.display = 'block';
+        imagenCatWhat.style.display = 'none';
+    } else {
+        imagenCatSleep.style.display = 'none';
+        imagenCatWhat.style.display = 'block';
+    }
+}
 //dinamico para valores
 function asignarTextoElemento(elemento, texto){
     let elementoHTML = document.querySelector(elemento);
@@ -11,7 +47,7 @@ function asignarTextoElemento(elemento, texto){
 }
 
 //validaciones para el numero ingresado por el usuario
-function numeroUsuario(){
+function encriptarTexto(){
     let numeroIngresado = parseInt(document.getElementById('valorIngresado').value);
     if(numeroSecreto === numeroIngresado){
         asignarTextoElemento('p', `Acertaste en ${intentos} ${intentos === 1 ? 'intento' : 'intentos'}!!!. El número secreto era ${numeroSecreto}`);
@@ -75,7 +111,7 @@ function condicionesIniciales() {
 }
 
 //reinicia el juego
-function reiniciarJuego(){
+function desencriptarTexto(){
     //limpiar el input
     limpiarInput();
 
