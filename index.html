@@ -14,6 +14,9 @@
 </head>
 
 <body>
+    <header class="header">
+        <h1 class="header__title">TextSecret</h1>
+    </header>
     <!-- Ingreso de texto -->
     <div class="container">
         <div class="container__text">
@@ -21,8 +24,8 @@
         </div>
         <div class="container__boton-container">
             <div class="botones">
-                <button onclick="encriptarTexto();" class="container__boton" id="intento" disabled>Encriptar</button>
-                <button onclick="desencriptarTexto();" class="container__boton" id="reiniciar" disabled>Desencriptar</button>
+                <button onclick="encriptarTexto();" class="container__boton" id="encriptar" disabled>Encriptar</button>
+                <button onclick="desencriptarTexto();" class="container__boton" id="desencriptar" disabled>Desencriptar</button>
             </div>
         </div>
     </div>
@@ -38,7 +41,7 @@
         <div class="container__text" id="containerResultado" hidden>
             <textarea id="resultadoProceso" class="container__input" readonly></textarea>
         </div>
-        <div class="container__boton-container" id="containerResultado" hidden>
+        <div class="container__boton-container" id="containerBtnCopiar" hidden>
             <div class="botones">
                 <button onclick="copiarTexto();" class="container__boton" id="copiarTexto">Copiar texto</button>
             </div>
