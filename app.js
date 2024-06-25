@@ -1,32 +1,36 @@
 //variables
 let mostrarCatSleep = false;
 let mostrarCatWhat = false;
+let mostrarCatWhatch = false;
 let mostrarContenedor = false;
-let numeroSecreto = 0;
-let intentos = 0;
-let numeroSorteado = [];
-let numeroMaximo = 3;
+let textoEncriptado;
+let textoDesencriptado;
 
 const valorIngresado = document.getElementById('valorIngresado');
 const imagenCatSleep = document.getElementById('imagenCatSleep');
 const imagenCatWhat = document.getElementById('imagenCatWhat');
-imagenCatSleep.style.display = 'block';
-imagenCatWhat.style.display = 'none';
+const containerResultado = document.getElementById('containerResultado');
+const containerBtnCopiar = document.getElementById('containerBtnCopiar');
+
+//Evento al ingresar valores en textarea valorIngresado
 valorIngresado.addEventListener('input', function() {
     if (valorIngresado.value.trim() === '') {
         mostrarCatSleep = true; // No mostrar la imagen si el textarea está vacío
-        mostrarContenedor = false;
         mostrarCatWhat = false;
+        mostrarCatWhatch = false;
+        mostrarContenedor = false;
+        document.querySelector('#resultadoProceso').value = '';
+        document.getElementById('encriptar').setAttribute('disabled', true);
+        document.getElementById('desencriptar').setAttribute('disabled', true);
     } else if (valorIngresado.value.trim() !== '') {
         mostrarCatSleep = false; // Mostrar la imagen si el textarea tiene contenido
-        mostrarContenedor = false;
         mostrarCatWhat = true;
+        mostrarCatWhatch = false;
+        mostrarContenedor = false;
+        document.querySelector('#resultadoProceso').value = '';
+        document.getElementById('encriptar').removeAttribute('disabled');
+        document.getElementById('desencriptar').removeAttribute('disabled');
     }
-    // else {
-    //     mostrarCatSleep = false; // Mostrar la imagen si el textarea tiene contenido
-    //     mostrarContenedor = true;
-    //     mostrarCatWhat = false;
-    // }
     actualizarVisibilidadImagen();
 });
 
@@ -34,11 +38,16 @@ function actualizarVisibilidadImagen() {
     if (mostrarCatSleep) {
         imagenCatSleep.style.display = 'block';
         imagenCatWhat.style.display = 'none';
+        containerResultado.style.display = 'none';
+        containerBtnCopiar.style.display = 'none';
     } else {
-        imagenCatSleep.style.display = 'none';
         imagenCatWhat.style.display = 'block';
+        imagenCatSleep.style.display = 'none';
+        containerResultado.style.display = 'none';
+        containerBtnCopiar.style.display = 'none';
     }
 }
+
 //dinamico para valores
 function asignarTextoElemento(elemento, texto){
     let elementoHTML = document.querySelector(elemento);
@@ -46,77 +55,74 @@ function asignarTextoElemento(elemento, texto){
     return;
 }
 
-//validaciones para el numero ingresado por el usuario
+//funcion para encriptar texto
 function encriptarTexto(){
-    let numeroIngresado = parseInt(document.getElementById('valorIngresado').value);
-    if(numeroSecreto === numeroIngresado){
-        asignarTextoElemento('p', `Acertaste en ${intentos} ${intentos === 1 ? 'intento' : 'intentos'}!!!. El número secreto era ${numeroSecreto}`);
-        document.getElementById('reiniciar').removeAttribute('disabled');
-        document.getElementById('intento').setAttribute('disabled', true);
-    } else {
-        if(numeroSecreto > numeroIngresado){
-            asignarTextoElemento('p', `El número secreto es mayor que ${numeroIngresado}`);
-        } else {
-            asignarTextoElemento('p', `El número secreto es menor que ${numeroIngresado}`);
-        }
-        intentos++;
-        limpiarInput();
+    let textoIngresado =document.getElementById('valorIngresado').value;
+    console.log(textoIngresado)
+    if (!/^[a-z\s]*$/.test(textoIngresado)) {
+        alert('El texto debe contener solo letras minúsculas sin acentos ni caracteres especiales.');
+        return;
     }
-};
-
-//limpiar el input
-function limpiarInput() {
-    document.querySelector('#valorIngresado').value = '';
-};
-
-//genera automaticamente el numero secreto
-function generarNumeroSecreto(){
-    let numeroGenerado = Math.floor(Math.random() * numeroMaximo);
-    console.log(numeroSecreto)
-
-    console.log(numeroSorteado.length == numeroMaximo)
-
-    //Si ya se sortearon todos los numeros posibles
-    if(numeroSorteado.length == numeroMaximo){
-        asignarTextoElemento('p', 'Ya se sortearon todos los números posibles');
+    textoEncriptado = textoIngresado
+        .replace(/e/g, 'enter')
+        .replace(/i/g, 'imes')
+        .replace(/a/g, 'ai')
+        .replace(/o/g, 'ober')
+        .replace(/u/g, 'ufat');
+    document.getElementById('resultadoProceso').value = textoEncriptado;
+    console.log(textoEncriptado)
+    if (valorIngresado.value.trim() !== ''){
+        imagenCatSleep.style.display = 'none';
+        imagenCatWhat.style.display = 'none';
+        containerResultado.style.display = 'block';
+        containerBtnCopiar.style.display = 'block';
     } else {
-        //Si el numero generado esta en la lista
-        if(numeroSorteado.includes(numeroGenerado)){
-            return generarNumeroSecreto();
-        } else {
-            numeroSorteado.push(numeroGenerado);
-            return numeroGenerado;
-        }
+        condicionesIniciales();
     }
+}
 
-};
+//funcion para desencriptar texto
+function desencriptarTexto(){
+    let textoIngresado = document.getElementById('valorIngresado').value;
+    if (!/^[a-z\s]*$/.test(textoIngresado)) {
+        alert('El texto debe contener solo letras minúsculas sin acentos ni caracteres especiales.');
+        return;
+    }
+    textoDesencriptado = textoIngresado
+        .replace(/enter/g, 'e')
+        .replace(/imes/g, 'i')
+        .replace(/ai/g, 'a')
+        .replace(/ober/g, 'o')
+        .replace(/ufat/g, 'u');
+    document.getElementById('resultadoProceso').value = textoDesencriptado;
+    console.log(textoDesencriptado)
+    if (valorIngresado.value.trim() !== ''){
+        imagenCatSleep.style.display = 'none';
+        imagenCatWhat.style.display = 'none';
+        containerResultado.style.display = 'block';
+        containerBtnCopiar.style.display = 'block';
+    } else {
+        condicionesIniciales();
+    }
+}
 
-//condiciones iniciales del juego
-function condicionesIniciales() {
-    asignarTextoElemento('h1', 'Juego del número secreto');
-    asignarTextoElemento('p', `Ingrese un número del 1 al ${numeroMaximo}`);
-
-    //generar nuevamente el numero secreto
-    numeroSecreto = generarNumeroSecreto();
-
-    //inicializar numero de intentos
-    intentos = 1;
-
-    //deshabilitar boton 'Nuevo juego'
-    document.getElementById('reiniciar').setAttribute('disabled', true);
-
-    //habilitar boton Intentar
-    document.getElementById('intento').removeAttribute('disabled');
+//Funcion para copiar texto
+function copiarTexto() {
 
 }
 
-//reinicia el juego
-function desencriptarTexto(){
-    //limpiar el input
-    limpiarInput();
+//condiciones iniciales
+function condicionesIniciales() {
+    // asignarTextoElemento('h1', 'Juego del número secreto');
+    imagenCatSleep.style.display = 'block';
+    imagenCatWhat.style.display = 'none';
+    containerResultado.style.display = 'none';
+    containerBtnCopiar.style.display = 'none';
+    document.querySelector('#valorIngresado').value = '';
+    document.querySelector('#resultadoProceso').value = '';
+    document.getElementById('encriptar').setAttribute('disabled', true);
+    document.getElementById('desencriptar').setAttribute('disabled', true);
 
-    //mensajes iniciales
-    condicionesIniciales();
-};
+}
 
 condicionesIniciales();
