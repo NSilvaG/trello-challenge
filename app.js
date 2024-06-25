@@ -108,8 +108,21 @@ function desencriptarTexto(){
 
 //Funcion para copiar texto
 function copiarTexto() {
+    // Seleccionar el texto del textarea
+    const textarea = document.getElementById('resultadoProceso');
+    textarea.select();
+    textarea.setSelectionRange(0, 99999); // Para dispositivos móviles
 
+    // Copiar el texto seleccionado al portapapeles
+    document.execCommand('copy');
+
+    // Deseleccionar el texto
+    textarea.setSelectionRange(0, 0);
+
+    // Mostrar algún mensaje de confirmación opcional
+    alert('¡Texto copiado al portapapeles!');
 }
+
 
 //condiciones iniciales
 function condicionesIniciales() {
