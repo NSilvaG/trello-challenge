@@ -120,7 +120,7 @@ function copiarTexto() {
     textarea.setSelectionRange(0, 0);
 
     // Mostrar algún mensaje de confirmación opcional
-    alert('¡Texto copiado al portapapeles!');
+    alert('¡Texto copiado!');
 }
 
 
